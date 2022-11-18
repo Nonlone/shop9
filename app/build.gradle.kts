@@ -17,9 +17,14 @@ dependencies {
     // Hikari 连接池
     implementation("com.zaxxer:HikariCP")
     // MyBatisPlus ORM 框架增强
-    implementation("com.baomidou:mybatis-plus-boot-starter:3.4.3")
+    implementation("com.baomidou:mybatis-plus-boot-starter")
+
+
+    implementation("per.nonlone:vertebra:1.0")
+
     // MySQL 数据库连接
     runtimeOnly("mysql:mysql-connector-java")
+
 
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
