@@ -12,9 +12,13 @@ plugins {
     id("io.spring.dependency-management").version("1.0.11.RELEASE")
 }
 
+
 dependencies {
     api(project(":app"))
 }
+
+
+
 
 tasks.getByName<org.springframework.boot.gradle.tasks.bundling.BootJar>("bootJar") {
     mainClass.set("com.shop9.app.Application")
@@ -22,10 +26,20 @@ tasks.getByName<org.springframework.boot.gradle.tasks.bundling.BootJar>("bootJar
 
 
 allprojects {
+    apply(plugin = "java-library")
+
     repositories {
         mavenLocal()
         mavenCentral()
+    }   
+
+    java {
+        withSourcesJar()
+        toolchain {
+            languageVersion.set(JavaLanguageVersion.of(11))
+        }
     }
+    
 }
 
 subprojects {
@@ -44,6 +58,8 @@ subprojects {
             // MyBatisPlus ORM 框架增强
             implementation("com.baomidou:mybatis-plus-boot-starter:3.4.3")
         }
-
     }
+
+    
+    
 }
