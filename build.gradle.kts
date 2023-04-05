@@ -1,15 +1,15 @@
-buildscript {
-    extra["lombokVersion"] = "6.1.0-m3"
-    extra["springBootVersion"] = "2.5.0"
-    extra["springDependencyManagementVersion"] = "1.0.11.RELEASE"
-
-}
 
 plugins {
     id("java-library")
-    id("io.freefair.lombok").version("6.1.0-m3")
-    id("org.springframework.boot").version("2.5.0")
-    id("io.spring.dependency-management").version("1.0.11.RELEASE")
+    id("io.freefair.lombok").version("6.6.3")
+    id("org.springframework.boot").version("3.0.3")
+    id("io.spring.dependency-management").version("1.1.0")
+
+    id("org.graalvm.buildtools.native").version("0.9.20")
+
+    // id("io.freefair.lombok").version("6.1.0-m3")
+    // id("org.springframework.boot").version("2.5.0")
+    // id("io.spring.dependency-management").version("1.0.11.RELEASE")
 }
 
 
@@ -18,10 +18,28 @@ dependencies {
 }
 
 
+// tasks.getByName<org.springframework.boot.gradle.tasks.bundling.BootJar>("bootJar") {
+//     mainClass.set("com.shop9.app.Application")
+// }
 
+springBoot {
+  mainClass.set("com.shop9.app.Application")
+}
 
-tasks.getByName<org.springframework.boot.gradle.tasks.bundling.BootJar>("bootJar") {
-    mainClass.set("com.shop9.app.Application")
+graalvmNative {
+    binaries {
+        named("main") {
+            javaLauncher.set(javaToolchains.launcherFor {
+                languageVersion.set(JavaLanguageVersion.of(17))
+                vendor.set(JvmVendorSpec.matching("GraalVM Community"))
+            })
+        }
+    }
+
+    binaries.all {
+        resources.autodetect()
+    }
+//    toolchainDetection.set(false)
 }
 
 
@@ -31,12 +49,13 @@ allprojects {
     repositories {
         mavenLocal()
         mavenCentral()
+        gradlePluginPortal()
     }   
 
     java {
         withSourcesJar()
         toolchain {
-            languageVersion.set(JavaLanguageVersion.of(11))
+            languageVersion.set(JavaLanguageVersion.of(17))
         }
     }
     

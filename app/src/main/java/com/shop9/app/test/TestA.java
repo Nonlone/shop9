@@ -37,7 +37,6 @@ public class TestA extends DomainEntity<Integer,TestA> {
 
 
 
-
     @Override
     public Integer getEntityId() {
         return getId();

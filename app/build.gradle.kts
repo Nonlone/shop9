@@ -22,9 +22,8 @@ dependencies {
 
     implementation("per.nonlone:vertebra:1.0")
 
-    // MySQL 数据库连接
-    runtimeOnly("mysql:mysql-connector-java")
-
+    // https://mvnrepository.com/artifact/com.mysql/mysql-connector-j
+    implementation("com.mysql:mysql-connector-j:8.0.31")
 
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
